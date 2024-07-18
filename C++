@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <iomanip>
+#include <algorithm> // For std::find
+
+using namespace std;
+
+// Structure to hold account information
+struct Account {
+    int accountNumber;
+    int pin;
+    double balance;
+    string name;
+
+    // Constructor to initialize account
+    Account(int number, int pin, double balance, string name)
+        : accountNumber(number), pin(pin), balance(balance), name(name) {}
+};
+
+// Function prototypes
+void displayMenu();
+void createAccount(vector<Account> &accounts);
+bool validatePIN(const vector<Account> &accounts, int accountNumber, int pin);
+void checkBalance(const vector<Account> &accounts, int accountNumber);
+void deposit(vector<Account> &accounts, int accountNumber);
+void withdraw(vector<Account> &accounts, int accountNumber);
+void transfer(vector<Account> &accounts, int accountNumber);
+void listAccounts(const vector<Account> &accounts);
+
+int main() {
+    vector<Account> accounts;
+
+    // Temporary initial accounts for demonstration
+    accounts.push_back(Account(1001, 1234, 1500.0, "Alice"));
+    accounts.push_back(Account(1002, 5678, 2000.0, "Bob"));
+    accounts.push_back(Account(1003, 4321, 2500.0, "Charlie"));
+
+    int choice;
+    do {
+        displayMenu();
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                createAccount(accounts);
+                break;
+            case 2: {
+                int accountNumber, pin;
+                cout << "Enter Account Number: ";
+                cin >> accountNumber;
+                cout << "Enter PIN: ";
+                cin >> pin;
+                if (validatePIN(accounts, accountNumber, pin)) {
+                    int index = find(accounts.begin(), accounts.end(), accountNumber) - accounts.begin();
+                    int accountIndex = index;
+                    checkBalance(accounts, accountIndex);
+                replied
